@@ -127,6 +127,8 @@ function toggleMenu() {
   const isOpen = nav.classList.toggle("open");
   header.classList.toggle("open", isOpen);
   document.body.classList.toggle("menu-open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
 }
 
 function renderProducts() {
@@ -140,7 +142,7 @@ function renderProducts() {
             <h3>${product.title}</h3>
             <p>${product.material}</p>
             <span class="product-price">${product.price}</span>
-            <button class="button primary" type="button" data-product="${product.sku}">Request Details</button>
+            <button class="button primary" type="button" data-product="${product.sku}" aria-label="Request details for ${product.title}">Request Details</button>
           </div>
         </article>
       `
@@ -181,6 +183,7 @@ function openProduct(sku) {
 
   document.body.classList.add("dialog-open");
   dialog.showModal();
+  dialogClose.focus();
 }
 
 function closeProduct() {
@@ -199,6 +202,8 @@ nav.addEventListener("click", () => {
   nav.classList.remove("open");
   header.classList.remove("open");
   document.body.classList.remove("menu-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open menu");
 });
 
 filters.forEach((button) => {
